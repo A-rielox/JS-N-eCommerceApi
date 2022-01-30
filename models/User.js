@@ -36,7 +36,7 @@ UserSchema.pre('save', async function () {
    this.password = await bcrypt.hash(this.password, salt);
 });
 
-// comparar password ( el this va a apuntar al user )
+// comparar password ( el this va a apuntar al password del user en el documento q ya se encontro con el findOne en el login)
 UserSchema.methods.comparePassword = async function (candidatePassword) {
    const isMatch = await bcrypt.compare(candidatePassword, this.password);
 

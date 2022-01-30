@@ -25,11 +25,41 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-   res.send('User login');
+   const { email, password } = req.body;
+
+   if (!email || !password) {
+      throw new BadRequestError('Please provide an email and password');
+   }
+
+   const user = await User.findOne({ email });
+
+   if (!user) {
+      throw new UnauthenticatedError('Invalid credential');
+   }
+
+   // comparando los pass
+   const isPasswordCorrect = await user.comparePassword(password);
+
+   if (!isPasswordCorrect) {
+      throw new UnauthenticatedError('Invalid credential');
+   }
+
+   const tokenUser = { name: user.name, userId: user._id, role: user.role };
+   attachCookiesToResponse({ res, user: tokenUser });
+
+   // manda la res ya con la cookie añadida
+   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
 const logout = async (req, res) => {
-   res.send('User logout');
+   res.cookie('token', 'Logout', {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+      secure: process.env.NODE_ENV === 'production',
+      // signed: true,
+   });
+
+   res.status(StatusCodes.OK).json({ msg: 'User logged out successfully' });
 };
 
 module.exports = { register, login, logout };
