@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { StatusCodes } = require('http-status-codes');
-const { createJWT } = require('../utils');
+const { attachCookiesToResponse } = require('../utils');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 
 const register = async (req, res) => {
@@ -16,9 +16,12 @@ const register = async (req, res) => {
 
    //===== Token
    const tokenUser = { name: user.name, userId: user._id, role: user.role }; // para no tener q pasar todo el user a la fcn q crea el token
-   const token = createJWT({ payload: tokenUser });
 
-   res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
+   //===== Cookie , solo añade la cookie con el token a la res
+   attachCookiesToResponse({ res, user: tokenUser });
+
+   // manda la res ya con la cookie añadida
+   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
 const login = async (req, res) => {

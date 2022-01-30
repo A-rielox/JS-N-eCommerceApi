@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 const morgan = require('morgan'); // 🥝
-
+const cookieParser = require('cookie-parser'); // 🍪🍪🍪
 //===== DB
 const connectDB = require('./db/connect');
 
@@ -19,8 +19,11 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 // @@@@@@@@@@@@@@@@@@@@ MIDDLEWARE
 app.use(morgan('tiny')); // 🥝
 app.use(express.json()); // 🐸
+app.use(cookieParser(process.env.JWT_SECRET)); // 🍪🍪🍪 me da acceso a la cookie en req.cookies
 
-app.get('/', (req, res) => {
+app.get('/api/v1', (req, res) => {
+   // console.log(req.cookies); xq ahora está firmada
+   console.log(req.signedCookies);
    res.send('Ruta base a e-commerce-api');
 });
 
@@ -47,6 +50,9 @@ const start = async () => {
 };
 
 start();
+
+//
+// app.use(cookieParser()); // 🍪🍪🍪  con el middleware de cookie-parser => cada ves q el browser mande un req ( con la cookie ) voy a tener acceso "a la cookie" en req.cookie, => UNA VEZ Q LA CREO, EN EL AUTHCONTROLLER ( Q ES MUUUUUUY SENCILLO ) Y LA MANDO COMO RESPUESTA ( res.cookie() ), YA EL BROWSER LA VA A PASAR EN TODOS LOS REQS. 😎😎😎
 
 //
 // 🥝 para obtener la info acerca del req q se hizo ( GET / 200 26 - 0.460 ms )
