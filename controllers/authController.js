@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { StatusCodes } = require('http-status-codes');
+const { createJWT } = require('../utils');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 
 const register = async (req, res) => {
@@ -10,9 +11,14 @@ const register = async (req, res) => {
    const isFirstAccount = (await User.countDocuments({})) === 0;
    const role = isFirstAccount ? 'admin' : 'user';
 
+   //===== crea usuario en DB
    const user = await User.create({ email, name, password, role }); // 💥
 
-   res.status(StatusCodes.CREATED).json({ user });
+   //===== Token
+   const tokenUser = { name: user.name, userId: user._id, role: user.role }; // para no tener q pasar todo el user a la fcn q crea el token
+   const token = createJWT({ payload: tokenUser });
+
+   res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
 };
 
 const login = async (req, res) => {
