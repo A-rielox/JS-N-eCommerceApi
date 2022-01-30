@@ -60,12 +60,12 @@
 -  [✅] create user
 -  [✅] send response with entire user (only while testing)
 -  [✅] check if email already in use (schema and controller)
--  [✅]] ignore 'role'
--  [✅]] alternative 'admin' setup
+-  [✅] ignore 'role'
+-  [✅] alternative 'admin' setup
 
 #### Handle Password
 
--  [] UserSchema.pre('save') - hook
+-  [✅] UserSchema.pre('save') - hook
 -  this points to User
 -  bcrypt.genSalt - number of rounds
 -  bcrypt.hash
