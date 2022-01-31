@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
 
 // hashear el password ( el this va a apuntar al user )
 UserSchema.pre('save', async function () {
+   // console.log(this.modifiedPaths());
+   // console.log(this.isModified('name'));
+   if (!this.isModified('password')) return;
+
    const salt = await bcrypt.genSalt(10);
    this.password = await bcrypt.hash(this.password, salt);
 });
@@ -44,6 +48,13 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 module.exports = mongoose.model('User', UserSchema);
+
+//
+// antes del user.save() en el updateUser del controller
+// UserSchema.pre('save', async function () {
+//    const salt = await bcrypt.genSalt(10);
+//    this.password = await bcrypt.hash(this.password, salt);
+// });
 
 //
 // 🥊 paquete para pasarle a la fcn y q me valide el mail, lo de la fcn lo sequé de la documentación. ".isEmail" es la fcn q viene en el package de "validator" para validar el email.

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { StatusCodes } = require('http-status-codes');
-const { attachCookiesToResponse } = require('../utils');
+const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 
 const register = async (req, res) => {
@@ -13,7 +13,7 @@ const register = async (req, res) => {
 
    const user = await User.create({ email, name, password, role }); // 💥
 
-   const tokenUser = { name: user.name, userId: user._id, role: user.role }; // para no tener q pasar todo el user a la fcn q crea el token
+   const tokenUser = createTokenUser(user);
 
    //===== Cookie , solo añade la cookie con el token a la res
    attachCookiesToResponse({ res, user: tokenUser });
@@ -38,11 +38,11 @@ const login = async (req, res) => {
       throw new UnauthenticatedError('Invalid credential');
    }
 
-   const tokenUser = { name: user.name, userId: user._id, role: user.role };
+   const tokenUser = createTokenUser(user);
    attachCookiesToResponse({ res, user: tokenUser });
 
    // manda la res ya con la cookie añadida
-   res.status(StatusCodes.CREATED).json({ user: tokenUser });
+   res.status(StatusCodes.OK).json({ user: tokenUser });
 };
 
 const logout = async (req, res) => {

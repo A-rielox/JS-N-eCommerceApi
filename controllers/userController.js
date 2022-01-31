@@ -1,6 +1,11 @@
 const User = require('../models/User');
+const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const { StatusCodes } = require('http-status-codes');
-const { NotFoundError } = require('../errors');
+const {
+   NotFoundError,
+   BadRequestError,
+   UnauthenticatedError,
+} = require('../errors');
 
 const getAllUsers = async (req, res) => {
    console.log(req.user);
@@ -24,15 +29,45 @@ const getSingleUser = async (req, res) => {
 };
 
 const showCurrentUser = async (req, res) => {
-   res.send('show current user route');
+   res.status(StatusCodes.OK).json({ user: req.user });
 };
 
+// update user with user.save()
+// volvia a hashear el pass y no me podia logear, arreglado en .pre('save') y ya no lo hashea denuevo
 const updateUser = async (req, res) => {
-   res.send(req.body);
+   const { email, name } = req.body;
+   if (!email || !name) {
+      throw new BadRequestError('Please provide email and name');
+   }
+
+   const user = await User.findOne({ _id: req.user.userId });
+   user.email = email;
+   user.name = name;
+   await user.save();
+
+   const tokenUser = createTokenUser(user);
+   attachCookiesToResponse({ res, user: tokenUser });
+
+   res.status(StatusCodes.OK).json({ user: tokenUser });
 };
 
 const updateUserPassword = async (req, res) => {
-   res.send(req.body);
+   const { oldPassword, newPassword } = req.body;
+   if (!oldPassword || !newPassword) {
+      throw new BadRequestError('Please provide old and new passwords');
+   }
+
+   const user = await User.findOne({ _id: req.user.userId });
+
+   const isPasswordCorrect = await user.comparePassword(oldPassword);
+   if (!isPasswordCorrect) {
+      throw new UnauthenticatedError('Invalid credential');
+   }
+
+   user.password = newPassword;
+   await user.save();
+
+   res.status(StatusCodes.OK).json({ msg: 'Password changed successfully' });
 };
 
 module.exports = {
@@ -42,3 +77,25 @@ module.exports = {
    updateUser,
    updateUserPassword,
 };
+
+// update user with findOneAndUpdate
+// volvia a hashear el pass con el otro método de user.save() y no me podia logear, arreglado en .pre('save') y ya no lo hashea denuevo, CON ESTE MÉTODO NO SE HASHEAVA DENUEVO XQ HO HACE EL TRIGGER DE 'SAVE'
+/*
+const updateUser = async (req, res) => {
+   const { email, name } = req.body;
+   if (!email || !name) {
+      throw new BadRequestError('Please provide email and name');
+   }
+
+   const user = await User.findOneAndUpdate(
+      { _id: req.user.userId },
+      req.body,
+      { new: true, runValidators: true }
+   );
+
+   const tokenUser = createTokenUser(user);
+   attachCookiesToResponse({ res, user: tokenUser });
+
+   res.status(StatusCodes.OK).json({ user: tokenUser });
+};
+*/
