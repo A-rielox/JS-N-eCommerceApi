@@ -11,6 +11,7 @@ const connectDB = require('./db/connect');
 
 // ===== routers
 const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 
 //===== ERROR HANDLER
 const notFoundMiddleware = require('./middleware/not-found');
@@ -29,6 +30,7 @@ app.get('/api/v1', (req, res) => {
 
 // ===== routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 
 // ===== not-found & error
 app.use(notFoundMiddleware);
@@ -53,6 +55,7 @@ start();
 
 //
 // app.use(cookieParser()); // 🍪🍪🍪  con el middleware de cookie-parser => cada ves q el browser mande un req ( con la cookie ) voy a tener acceso "a la cookie" en req.cookie, => UNA VEZ Q LA CREO, EN EL AUTHCONTROLLER ( Q ES MUUUUUUY SENCILLO ) Y LA MANDO COMO RESPUESTA ( res.cookie() ), YA EL BROWSER LA VA A PASAR EN TODOS LOS REQS. 😎😎😎
+// COMO VA A ESTAR FIRMADA LA COOKIE => YA NO VA A ESTAR EN REQ.COOKIES, SINO EN "REQ.SIGNEDcOOKIES"
 
 //
 // 🥝 para obtener la info acerca del req q se hizo ( GET / 200 26 - 0.460 ms )

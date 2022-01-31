@@ -11,10 +11,8 @@ const register = async (req, res) => {
    const isFirstAccount = (await User.countDocuments({})) === 0;
    const role = isFirstAccount ? 'admin' : 'user';
 
-   //===== crea usuario en DB
    const user = await User.create({ email, name, password, role }); // 💥
 
-   //===== Token
    const tokenUser = { name: user.name, userId: user._id, role: user.role }; // para no tener q pasar todo el user a la fcn q crea el token
 
    //===== Cookie , solo añade la cookie con el token a la res
@@ -26,20 +24,16 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
    const { email, password } = req.body;
-
    if (!email || !password) {
       throw new BadRequestError('Please provide an email and password');
    }
 
    const user = await User.findOne({ email });
-
    if (!user) {
       throw new UnauthenticatedError('Invalid credential');
    }
 
-   // comparando los pass
    const isPasswordCorrect = await user.comparePassword(password);
-
    if (!isPasswordCorrect) {
       throw new UnauthenticatedError('Invalid credential');
    }
