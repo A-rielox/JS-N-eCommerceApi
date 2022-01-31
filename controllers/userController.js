@@ -1,5 +1,9 @@
 const User = require('../models/User');
-const { attachCookiesToResponse, createTokenUser } = require('../utils');
+const {
+   attachCookiesToResponse,
+   createTokenUser,
+   checkPermissions,
+} = require('../utils');
 const { StatusCodes } = require('http-status-codes');
 const {
    NotFoundError,
@@ -24,6 +28,9 @@ const getSingleUser = async (req, res) => {
    if (!user) {
       throw new NotFoundError(`No user with id: ${_id}`);
    }
+
+   // el id "mio" de cuando me autenticaron, y el q estoy pidiendo ( q está en el user ), se ocupa para q solo si eres admin puedas ver a otro usuario, o si es tu info la q estas pidiendo
+   checkPermissions(req.user, user._id);
 
    res.status(StatusCodes.OK).json({ user });
 };
