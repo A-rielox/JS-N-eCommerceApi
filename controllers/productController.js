@@ -1,3 +1,4 @@
+const path = require('path');
 const Product = require('../models/Product');
 const { StatusCodes } = require('http-status-codes');
 const {
@@ -74,8 +75,36 @@ const deleteProduct = async (req, res) => {
    res.status(StatusCodes.OK).json({ msg: 'Successfully deleted product' });
 };
 
+// este show es para subir la imagen a mi server a la carpeta upload, pa mandarla a cloudinary o donde sea de esos lugares tiene q hacerse a través de un req del front al servicio de almacenamiento
 const uploadImage = async (req, res) => {
-   res.send('Upload Image Route');
+   if (!req.files) {
+      throw new CustomError.BadRequestError('No file uploaded');
+   }
+
+   const productImage = req.files.image;
+
+   if (!productImage.mimetype.startsWith('image')) {
+      throw new CustomError.BadRequestError('Please upload an image');
+   }
+
+   const maxSize = 4000000;
+   if (productImage.size > maxSize) {
+      throw new CustomError.BadRequestError(
+         `Please upload an image smaller than ${maxSize} bytes`
+      );
+   }
+
+   const imagePath = path.join(
+      __dirname,
+      '../public/uploads/' + `${productImage.name}`
+   );
+
+   await productImage.mv(imagePath);
+
+   return res
+      .status(StatusCodes.OK)
+      .json({ image: `/uploads/${productImage.name}` });
+   //la respuesta es el path a la imagen en el servidor ( el atributo src ), q es el q se va a ocupar en el submit para pasar la imagen del server a la DB.
 };
 
 module.exports = {

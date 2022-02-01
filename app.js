@@ -4,6 +4,15 @@ require('express-async-errors'); // 🙀
 const express = require('express');
 const app = express();
 
+// ===== para ver el archivo (imagen) en el req en la propiedad file, tambien poder mover el archivo y poder arregla todo para tener el temp directory
+const fileUpload = require('express-fileupload');
+// const cloudinary = require('cloudinary').v2;
+// cloudinary.config({
+//    cloud_name: process.env.CLOUD_NAME,
+//    api_key: process.env.CLOUD_API_KEY,
+//    api_secret: process.env.CLOUD_API_SECRET,
+// });
+
 const morgan = require('morgan'); // 🥝
 const cookieParser = require('cookie-parser'); // 🍪🍪🍪
 //===== DB
@@ -22,6 +31,8 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(morgan('tiny')); // 🥝
 app.use(express.json()); // 🐸
 app.use(cookieParser(process.env.JWT_SECRET)); // 🍪🍪🍪 me da acceso a la cookie en req.cookies
+app.use(express.static('./public')); // 🐱 para la imagen
+app.use(fileUpload(/* { useTempFiles: true } */)); // para ver el archivo (imagen) en el body, y arregle para tener el temp
 
 app.get('/api/v1', (req, res) => {
    // console.log(req.cookies); xq ahora está firmada
