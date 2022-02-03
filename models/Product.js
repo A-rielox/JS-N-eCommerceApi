@@ -77,6 +77,11 @@ ProductSchema.virtual('reviews', {
    justOne: false,
 });
 
+// al ocupar el this.model('Review') => accedo al modelo "Review" y el deleteMany lo va a hacer en las reviews, va a borrar todas donde pa prop product tenga el id del producto ( xq estoy ocupando productSchema )
+ProductSchema.pre('remove', async function (next) {
+   await this.model('Review').deleteMany({ product: this._id });
+});
+
 module.exports = mongoose.model('Product', ProductSchema);
 
 // 🔔

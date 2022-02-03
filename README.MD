@@ -258,23 +258,23 @@
 
 usar checkPermisions
 
--  [] get id from req.params
--  [] check if review exists
--  [] if no review, 404
--  [] check permissions (req.user, review.user) , q el q la intenta borrar sel el mismo q la creó ( el userId = a review.user )
--  [] use await review.remove()
--  [] send back 200
+-  [✅] get id from req.params
+-  [✅] check if review exists
+-  [✅] if no review, 404
+-  [✅] check permissions (req.user, review.user) , q el q la intenta borrar sel el mismo q la creó ( el userId = a review.user )
+-  [✅] use await review.remove()
+-  [✅] send back 200
 
 #### Update Review
 
--  [] get id from req.params
--  [] get {rating, title comment} from req.body
--  [] check if review exists
--  [] if no review, 404
--  [] check permissions
--  [] set review properties equal to rating, title, comment
--  [] use await review.save()
--  [] send back 200
+-  [✅] get id from req.params
+-  [✅] get {rating, title comment} from req.body
+-  [✅] check if review exists
+-  [✅] if no review, 404
+-  [✅] check permissions
+-  [✅] set review properties equal to rating, title, comment
+-  [✅] use await review.save()
+-  [✅] send back 200
 
 #### Populate
 

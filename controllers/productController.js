@@ -59,6 +59,7 @@ const deleteProduct = async (req, res) => {
       throw new NotFoundError(`No product with id: ${productId}`);
    }
 
+   // se hace con .remove() para poder poner un .pre en el modelo y q el trigger sea 'remove', y poder remover todas las reviews del producto borrado
    await product.remove(); // explicacion pendiente
 
    res.status(StatusCodes.OK).json({ msg: 'Successfully deleted product' });

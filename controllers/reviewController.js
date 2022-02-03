@@ -89,12 +89,22 @@ const deleteReview = async (req, res) => {
    res.status(StatusCodes.OK).json({ msg: 'Successfully deleted review' });
 };
 
+// para tener todas las reviews de un product y poder hacer queries a este
+const getSingleProductReviews = async (req, res) => {
+   const { id: productId } = req.params;
+
+   const reviews = await Review.find({ product: productId });
+
+   res.status(StatusCodes.OK).json({ count: reviews.length, reviews });
+};
+
 module.exports = {
    createReview,
    getAllReviews,
    getSingleReview,
    updateReview,
    deleteReview,
+   getSingleProductReviews,
 };
 
 // 🍑
