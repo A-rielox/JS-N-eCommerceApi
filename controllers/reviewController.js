@@ -29,11 +29,10 @@ const createReview = async (req, res) => {
 };
 
 const getAllReviews = async (req, res) => {
-   const reviews = await Review.find({});
-
-   // if (reviews.length < 1) {
-   //    res.status(StatusCodes.OK).json({ msg: 'No reviews yet' });
-   // }
+   const reviews = await Review.find({}).populate({
+      path: 'product',
+      select: 'name company price',
+   }); // 🍑
 
    res.status(StatusCodes.OK).json({ count: reviews.length, reviews });
 };
@@ -97,3 +96,43 @@ module.exports = {
    updateReview,
    deleteReview,
 };
+
+// 🍑
+// .populate()
+// nos permite referenciar documentos en otras colecciones
+
+// en las reviews tengo
+
+// const ReviewSchema = new mongoose.Schema(
+//    {
+//       rating: {...},
+//       title: {...},
+//       comment: {...}
+//       /* NO ocupa type: mongoose.Types.ObjectId,  */,
+//       user: {
+//          type: mongoose.Schema.ObjectId,
+//          ref: 'User',
+//          required: true,
+//       },
+//       product: {
+//          type: mongoose.Schema.ObjectId,
+//          ref: 'Product',
+//          required: true,
+//       },
+//    },
+//    { timestamps: true }
+// );
+// con esto hago el link a las colecciones de "users" y "products"
+
+// entonces en el reviewController.js puedo:
+
+// const getAllReviews = async (req, res) => {
+//    const reviews = await Review.find({}).populate({
+//       path: 'product',
+//       select: 'name company price',
+//    });
+
+//    res.status(StatusCodes.OK).json({ count: reviews.length, reviews });
+// };
+
+// donde el "path: 'product'" hace referencia al "ref: 'Product'" del ReviewSchema y hace q busque en la coleccion "products'; y el "select: 'name company price' es para q busque estas propiedades en la coleccion de "products" y como en "type: mongoose.Schema.ObjectId" esta ligando al _id del product => ya sabe de cual traer las props

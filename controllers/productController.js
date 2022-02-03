@@ -23,7 +23,10 @@ const getAllProducts = async (req, res) => {
 const getSingleProduct = async (req, res) => {
    const { id: productId } = req.params;
 
-   const product = await Product.findOne({ _id: productId });
+   const product = await Product.findOne({ _id: productId }).populate(
+      'reviews'
+   ); // 🍑
+
    if (!product) {
       throw new NotFoundError(`No product with id: ${productId}`);
    }
@@ -32,20 +35,6 @@ const getSingleProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-   // const {
-   //    body: { name, price, description, category, company },
-   //    params: { id: productId },
-   // } = req;
-
-   // if (
-   //    !name === '' ||
-   //    !price === '' ||
-   //    !description === '' ||
-   //    !category === '' ||
-   //    !company === ''
-   // ) {
-   //    throw new BadRequestError('Please provide company and position');
-   // }
    const { id: productId } = req.params;
 
    const product = await Product.findOneAndUpdate(
@@ -115,3 +104,31 @@ module.exports = {
    deleteProduct,
    uploadImage,
 };
+
+// 🍑
+// en getSingleProduct no se puede hacer directamente  ".populate('reviews')" xq el  product no está conectado a las reviews ( en el ProductSchema no tengo una prop con type: mongoose.Type.ObjectId y ref: 'Review' ), para esto se utilizan los "virtuals", estas props se crean "on-the-fly" ( no estan almacenadas en algun lugar )
+//
+//para esto en el ProductSchema agrego :
+// con el "toJSON y toObject" es q le permito a este modelo aceptar virtuals
+
+// para crear la propiedad virtual,
+// el parametro 'reviews" es xq acá llamo ".populate('reviews')"
+// ref: 'Review' -> para ocupar los documentos de reviews ( los ducumentos q ocupan el modelo 'Review' , q son los de la coleccion "reviews" )
+// "localField: '_id'" -> el parametro local q ocupo para buscar en esa coleccion
+// foreignField: 'product' -> el parametro en esa colleccion contra el cual hacer el match ( en ReviewSchema tengo product: {
+//               type: mongoose.Schema.ObjectId,
+//               ref: 'Product',
+//               required: true,
+//               }
+// justOne -> para q me devuelva una lista
+//
+// si quisiera solo las reviews donde el rating es = a 5
+// ProductSchema.virtual('reviews', {
+//    ref: 'Review',
+//    localField: '_id',
+//    foreignField: 'product',
+//    justOne: false,
+//    match: { rating: 5 },
+// });
+//
+// como este va a ser virtual => no se le van a poder hacer queries , o sea poner algo como .populate('reviews').findOne({ id: algo })
