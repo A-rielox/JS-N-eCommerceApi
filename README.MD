@@ -232,34 +232,36 @@
 
 #### Review Structure
 
--  [] add reviewController file in controllers
--  [] export (createReview, getAllReviews, getSingleReview, updateReview, deleteReview) functions
--  [] res.send('function name')
--  [] setup reviewRoutes file in routes
--  [] import all controllers
--  [] only getAllReviews and getSingleReview accessible to public
--  [] rest only to users (setup middleware) ( solo para los q esten logeados)
--  [] typical REST setup
--  [] import reviewRoutes as reviewRouter in the app.js
--  [] setup app.use('/api/v1/reviews', reviewRouter)
+-  [✅] add reviewController file in controllers
+-  [✅] export (createReview, getAllReviews, getSingleReview, updateReview, deleteReview) functions
+-  [✅] res.send('function name')
+-  [✅] setup reviewRoutes file in routes
+-  [✅] import all controllers
+-  [✅] only getAllReviews and getSingleReview accessible to public
+-  [✅] rest only to users (setup middleware) ( solo para los q esten logeados)
+-  [✅] typical REST setup
+-  [✅] import reviewRoutes as reviewRouter in the app.js
+-  [✅] setup app.use('/api/v1/reviews', reviewRouter)
 
 #### Create Review
 
--  [] check for product in the req.body
--  [] attach user property (set it equal to req.user.userId) on to req.body
--  [] create review
--  [] don't test yet
+-  [✅] check for product in the req.body
+-  [✅] attach user property (set it equal to req.user.userId) on to req.body
+-  [✅] create review
+-  [✅] don't test yet
 
 #### Get All Reviews and Get Single Review
 
--  [] both public routes, typical setup
+-  [✅] both public routes, typical setup
 
 #### Delete Review
+
+usar checkPermisions
 
 -  [] get id from req.params
 -  [] check if review exists
 -  [] if no review, 404
--  [] check permissions (req.user, review.user)
+-  [] check permissions (req.user, review.user) , q el q la intenta borrar sel el mismo q la creó ( el userId = a review.user )
 -  [] use await review.remove()
 -  [] send back 200
 
