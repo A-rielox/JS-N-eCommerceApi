@@ -35,7 +35,33 @@ const ReviewSchema = new mongoose.Schema(
 // para q se pueda dejar solo una review por c/user en cada producto 🔥 ( un ser puede dejar solo 1 review por product )
 ReviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
+// ⭐
+ReviewSchema.statics.calculateAverageRating = async function (productId) {
+   console.log(productId);
+};
+
+ReviewSchema.post('save', async function () {
+   await this.constructor.calculateAverageRating(this.product);
+   // el product de este schema tiene el id del producto
+});
+
+ReviewSchema.post('remove', async function () {
+   await this.constructor.calculateAverageRating(this.product);
+});
+
 module.exports = mongoose.model('Review', ReviewSchema);
+
+//
+// ⭐
+// la diferencia con los métodos ( q se llaman en las instacias como de user o de product ), los "statics" se llaman en el Schema , en el user-model tengo el modelo:
+// UserSchema.methods.comparePassword = async function (candidatePassword) {
+//    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+
+//    return isMatch;
+// };
+// q llamo en las instancias de los users para comparar los pass
+//
+// estos los estoy llamando en un post o pre con el trigger "save" y "remove", xeso en el reviewController ocupo "review.save()" en updateReview y "review.remove()" en deleteReview, PARA Q SE LLAMEN ESTOS POST('SAVE',...) Y POST('REMOVE',...)
 
 //
 // 🔥

@@ -60,7 +60,7 @@ const deleteProduct = async (req, res) => {
    }
 
    // se hace con .remove() para poder poner un .pre en el modelo y q el trigger sea 'remove', y poder remover todas las reviews del producto borrado
-   await product.remove(); // explicacion pendiente
+   await product.remove();
 
    res.status(StatusCodes.OK).json({ msg: 'Successfully deleted product' });
 };
@@ -116,7 +116,7 @@ module.exports = {
 // el parametro 'reviews" es xq acá llamo ".populate('reviews')"
 // ref: 'Review' -> para ocupar los documentos de reviews ( los ducumentos q ocupan el modelo 'Review' , q son los de la coleccion "reviews" )
 // "localField: '_id'" -> el parametro local q ocupo para buscar en esa coleccion
-// foreignField: 'product' -> el parametro en esa colleccion contra el cual hacer el match ( en ReviewSchema tengo product: {
+// foreignField: 'product' -> el parametro en esa colleccion contra el cual hacer el match ( en ReviewSchema tengo:... product: {
 //               type: mongoose.Schema.ObjectId,
 //               ref: 'Product',
 //               required: true,
