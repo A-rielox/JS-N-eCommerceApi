@@ -52,17 +52,17 @@ app.use(xss());
 app.use(mongoSanitize());
 //===== fin seguridad
 
-app.use(morgan('tiny')); // 🥝
+// app.use(morgan('tiny')); // 🥝 SOLO DEV-ENV
 app.use(express.json()); // 🐸
 app.use(cookieParser(process.env.JWT_SECRET)); // 🍪🍪🍪 me da acceso a la cookie en req.cookies
 app.use(express.static('./public')); // 🐱 para la imagen
 app.use(fileUpload(/* { useTempFiles: true } */)); // para ver el archivo (imagen) en el body, y arregle para tener el temp
 
-app.get('/api/v1', (req, res) => {
-   // console.log(req.cookies); xq ahora está firmada
-   console.log(req.signedCookies);
-   res.send('Ruta base a e-commerce-api');
-});
+// app.get('/api/v1', (req, res) => {
+//    // console.log(req.cookies); xq ahora está firmada
+//    console.log(req.signedCookies);
+//    res.send('Ruta base a e-commerce-api');
+// }); SOLO DEV-ENV
 
 // ===== routes
 app.use('/api/v1/auth', authRouter);
