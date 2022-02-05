@@ -351,11 +351,11 @@ usar checkPermisions
 
 #### Security Packages
 
--  [] express-rate-limiter
--  [] helmet
--  [] xss-clean
--  [] express-mongo-sanitize
--  [] cors (cookies!!!!)
+-  [✅] express-rate-limiter
+-  [✅] helmet
+-  [✅] xss-clean
+-  [✅] express-mongo-sanitize
+-  [✅] cors (cookies!!!!)
 
 #### Deploy on Heroku
 
