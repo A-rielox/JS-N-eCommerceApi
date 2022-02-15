@@ -32,7 +32,7 @@ const ReviewSchema = new mongoose.Schema(
    { timestamps: true }
 );
 
-// para q se pueda dejar solo una review por c/user en cada producto 🔥 ( un ser puede dejar solo 1 review por product )
+// para q se pueda dejar solo una review por c/user en cada producto 🔥 ( un user puede dejar solo 1 review por product )
 ReviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
 // ⭐
@@ -49,6 +49,7 @@ ReviewSchema.statics.calculateAverageRating = async function (productId) {
    ]);
 
    console.log(result);
+   // [ { _id: null, averageRating: 3, numOfReviews: 1 } ]
 
    try {
       await this.model('Product').findOneAndUpdate(
