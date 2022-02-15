@@ -2,6 +2,7 @@ const { UnauthorizedError } = require('../errors');
 
 // el id "mio" de cuando me autenticaron, y el q estoy pidiendo ( q está en el user )
 const checkPermissions = (requestUser, resourceUserId) => {
+   // se ocupa en useController
    // console.log(requestUser);
    // console.log(resourceUserId);
    // console.log(typeof resourceUserId); // es un object, no string con id

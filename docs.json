@@ -1,0 +1,441 @@
+{
+  "info": {
+    "_postman_id": "dba2a949-8074-401d-b67e-e2a0895b21b6",
+    "name": "E-commerce",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Logout user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/auth/logout",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"ayi@mail.com\", \"password\": \"password\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/auth/login",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Emma\", \"email\": \"emma@mail.com\", \"password\": \"password\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/auth/register",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/users",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get single user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/users/61f8128bf723f93524130803",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["users", "61f8128bf723f93524130803"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show current user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/users/showme",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["users", "showme"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\":\"Emma\",\"email\":\"emma@mail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/users/updateuser",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["users", "updateuser"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update password",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\":\"new password\", \"newPassword\":\"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/users/updateuserpassword",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["users", "updateuserpassword"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "Get all products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n      \"name\": \"emperor bed\",\n      \"price\": 23999,\n      \"image\": \"https://dl.airtable.com/.attachmentThumbnails/0446e84c5bca9643de3452a61b2d6195/1b32f48b\",\n      \"colors\": [\"#0000ff\", \"#000\"],\n      \"company\": \"ikea\",\n      \"description\": \"Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge\",\n      \"category\": \"bedroom\"\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get single product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products/61f95ebd7f7e755b65e3b481",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products", "61f95ebd7f7e755b65e3b481"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update product",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"new  \"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products/61f95ebd7f7e755b65e3b481",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products", "61f95ebd7f7e755b65e3b481"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products/61f95ebd7f7e755b65e3b481",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products", "61f95ebd7f7e755b65e3b481"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "computer-4.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products/uploadimage",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products", "uploadimage"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get single product reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/products/61f96939b75c859ee4770a2c/reviews",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["products", "61f96939b75c859ee4770a2c", "reviews"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "Create review",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"product\":\"61fd4529ed434d954aaab0b4\",\n    \"rating\":\"1\",\n    \"title\":\"por emma\",\n    \"comment\":\"bad product\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/reviews",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["reviews"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/reviews",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["reviews"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get single review",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/reviews/61fae8023617167ba0f942ca",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["reviews", "61fae8023617167ba0f942ca"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update review",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"rating\":\"5\",\n    \"title\":\"por ayi\",\n    \"comment\":\"bad product\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/reviews/61fd4564ed434d954aaab0b9",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["reviews", "61fd4564ed434d954aaab0b9"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete review",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/reviews/61fd4564ed434d954aaab0b9",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["reviews", "61fd4564ed434d954aaab0b9"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/orders/",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["orders", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/orders/",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["orders", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get single order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/orders/123",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["orders", "123"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all user orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/orders/showAllMyOrders",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["orders", "showAllMyOrders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update order",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "https://e-commerce-api-a-rielox.herokuapp.com/api/v1/orders/123",
+              "host": ["https://e-commerce-api-a-rielox.herokuapp.com/api/v1"],
+              "path": ["orders", "123"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
